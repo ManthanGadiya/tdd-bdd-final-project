@@ -104,7 +104,28 @@ def step_impl(context, element_name):
 # to get the element id of any button
 ##################################################################
 
-## UPDATE CODE HERE ##
+@when('I press the "{button}" button')
+def step_impl(context, button):
+    element_id = button.lower() + '-btn'
+    element = context.driver.find_element(By.ID, element_id)
+    element.click()
+
+
+@then('I should see the message "{message}"')
+def step_impl(context, message):
+    element = context.driver.find_element(By.ID, 'flash_message')
+    assert(message in element.text)
+
+@then('I should see "{text}" in the results')
+def step_impl(context, text):
+    element = context.driver.find_element(By.TAG_NAME, 'body')
+    assert text in element.text
+
+
+@then('I should not see "{text}" in the results')
+def step_impl(context, text):
+    element = context.driver.find_element(By.TAG_NAME, 'body')
+    assert text not in element.text
 
 ##################################################################
 # This code works because of the following naming convention:
